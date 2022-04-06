@@ -29,8 +29,11 @@ using namespace rtps;
 
 int type = 1;
 int count = 10;
+#if defined(__QNXNTO__)
+long sleepDuration = 100;
+#else
 long sleep = 100;
-
+#endif
 void usage()
 {
     std::cout << "USAGE:" << std::endl;
@@ -96,7 +99,11 @@ bool parseArgs(
                     Log::Reset();
                     return false;
                 }
+#if defined(__QNXNTO__)
+                sleepDuration = atoi(argv[++i]);
+#else
                 sleep = atoi(argv[++i]);
+#endif
             }
         }
     }
@@ -128,7 +135,11 @@ int main(
             HelloWorldPublisher mypub;
             if (mypub.init())
             {
+#if defined(__QNXNTO__)
+                mypub.run(count, sleepDuration);
+#else
                 mypub.run(count, sleep);
+#endif
             }
             break;
         }

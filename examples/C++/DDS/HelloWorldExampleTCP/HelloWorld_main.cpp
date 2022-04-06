@@ -27,7 +27,13 @@
 
 #include <optionparser.hpp>
 
+#if defined(__QNXNTO__)
+using namespace eprosima;
+using namespace fastrtps;
+using namespace rtps;
+#else
 namespace option = eprosima::option;
+#endif
 
 struct Arg : public option::Arg
 {
@@ -169,9 +175,12 @@ const option::Descriptor usage[] = {
     { 0, 0, 0, 0, 0, 0 }
 };
 
+#if !defined(__QNXNTO__)
 using namespace eprosima;
 using namespace fastrtps;
 using namespace rtps;
+#endif
+
 int main(
         int argc,
         char** argv)
